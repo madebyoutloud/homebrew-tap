@@ -1,0 +1,35 @@
+require_relative "../lib/outloud_token"
+
+class Outloud < Formula
+  desc "Project templates, for developers"
+  homepage "https://cli.outloud.dev"
+  url "https://cli.outloud.dev/cli/1.0.1.tgz",
+      headers: ["Authorization: Bearer #{OutloudToken.read}"]
+  sha256 "22713d0dcfe619ea82ff0c89e5603894bef9a7d1e16b0119b5849a11538df25d"
+
+  livecheck do
+    url "https://cli.outloud.dev/cli/latest.json"
+    strategy :json do |json|
+      json["latest"]
+    end
+  end
+
+  depends_on "node"
+
+  def install
+    system "npm", "install", *std_npm_args
+    bin.install_symlink libexec.glob("bin/*")
+  end
+
+  def caveats
+    <<~EOS
+      Downloads need your personal token from https://cli.outloud.dev.
+      If an install or upgrade fails with HTTP 401, open https://cli.outloud.dev,
+      sign in and run the setup command again.
+    EOS
+  end
+
+  test do
+    assert_match version.to_s, shell_output("#{bin}/outloud --version")
+  end
+end
