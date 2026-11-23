@@ -14,11 +14,13 @@ class Outloud < Formula
     end
   end
 
-  depends_on "node"
+  # keg-only, so installing outloud never changes the node on PATH
+  depends_on "node@24"
 
   def install
-    system "npm", "install", *std_npm_args
-    bin.install_symlink libexec.glob("bin/*")
+    node = formula_opt_bin("node@24")
+    system node/"npm", "install", *std_npm_args
+    (bin/"outloud").write_env_script libexec/"bin/outloud", PATH: "#{node}:$PATH"
   end
 
   def caveats
