@@ -1,7 +1,7 @@
 require_relative "../lib/outloud_token"
 
 class Outloud < Formula
-  desc "Project templates, for developers"
+  desc "Project templates and AI coding agent setup, for developers"
   homepage "https://cli.outloud.dev"
   url "https://cli.outloud.dev/cli/1.0.4.tgz",
       headers: ["Authorization: Bearer #{OutloudToken.read}"]
@@ -23,9 +23,8 @@ class Outloud < Formula
 
   def caveats
     <<~EOS
-      Downloads need your personal token from https://cli.outloud.dev.
-      If an install or upgrade fails with HTTP 401, open https://cli.outloud.dev,
-      sign in and run the setup command again.
+      Downloads need your personal token. If an install or upgrade fails with
+      HTTP 401, sign in again with: curl -fsSL https://cli.outloud.dev/install.sh | sh
     EOS
   end
 

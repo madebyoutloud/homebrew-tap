@@ -2,11 +2,11 @@
 # Points a formula at a new release: rewrites its url (which carries the
 # version) and sha256, and a version line if the formula has one.
 #
-#   scripts/update-formula.sh outloud-ai 1.2.0             # downloads from cli.outloud.dev
-#   scripts/update-formula.sh outloud-ai 1.2.0 ai.tgz      # hashes a tarball you already have
+#   scripts/update-formula.sh outloud 2.1.0             # downloads from cli.outloud.dev
+#   scripts/update-formula.sh outloud 2.1.0 cli.tgz     # hashes a tarball you already have
 #
 # Without a tarball it downloads the release from https://cli.outloud.dev with
-# HOMEBREW_OUTLOUD_TOKEN or the token the setup command saved to
+# HOMEBREW_OUTLOUD_TOKEN or the token install.sh saved to
 # ${XDG_CONFIG_HOME:-~/.config}/outloud/token.
 set -eu
 
@@ -17,15 +17,14 @@ fail() {
   exit 1
 }
 
-[ $# -eq 2 ] || [ $# -eq 3 ] || fail "usage: $0 <outloud-ai|outloud> <version> [tarball]"
+[ $# -eq 2 ] || [ $# -eq 3 ] || fail "usage: $0 outloud <version> [tarball]"
 name=$1
 version=${2#v}
 tarball=${3:-}
 
 case "$name" in
-  outloud-ai) key=ai ;;
   outloud) key=cli ;;
-  *) fail "unknown formula: $name, use outloud-ai or outloud" ;;
+  *) fail "unknown formula: $name, use outloud" ;;
 esac
 
 case "$version" in
@@ -45,7 +44,7 @@ else
   token=${HOMEBREW_OUTLOUD_TOKEN:-}
   token_file="${XDG_CONFIG_HOME:-$HOME/.config}/outloud/token"
   if [ -z "$token" ] && [ -f "$token_file" ]; then token=$(tr -d ' \r\n' <"$token_file"); fi
-  [ -n "$token" ] || fail "no token: set HOMEBREW_OUTLOUD_TOKEN or run the setup command from $DIST_URL, or pass a tarball"
+  [ -n "$token" ] || fail "no token: set HOMEBREW_OUTLOUD_TOKEN or sign in with curl -fsSL $DIST_URL/install.sh | sh, or pass a tarball"
 
   tarball="$work/$name.tgz"
   auth="$work/auth"

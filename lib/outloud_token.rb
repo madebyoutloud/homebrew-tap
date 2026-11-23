@@ -2,7 +2,7 @@
 
 # The personal download token for https://cli.outloud.dev, shared by the formulas.
 #
-# HOMEBREW_OUTLOUD_TOKEN wins, otherwise the token the setup command saved to
+# HOMEBREW_OUTLOUD_TOKEN wins, otherwise the token install.sh saved to
 # ${XDG_CONFIG_HOME:-~/.config}/outloud/token. Homebrew passes the user's
 # XDG_CONFIG_HOME on as HOMEBREW_XDG_CONFIG_HOME, so both are read.
 module OutloudToken
