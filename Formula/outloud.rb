@@ -3,9 +3,9 @@ require_relative "../lib/outloud_token"
 class Outloud < Formula
   desc "Project templates and AI coding agent setup, for developers"
   homepage "https://cli.outloud.dev"
-  url "https://cli.outloud.dev/cli/2.0.1.tgz",
+  url "https://cli.outloud.dev/cli/2.0.2.tgz",
       headers: ["Authorization: Bearer #{OutloudToken.read}"]
-  sha256 "ddfb954825d11e81cb3f3754e1b7d69c48d7fc1f4756bc6b155c46405180e3d6"
+  sha256 "e5620c63ca1fb1c35acb379f5684fbfe5d77371d6995141fac10ba1deba092f7"
 
   livecheck do
     url "https://cli.outloud.dev/cli/latest.json"
